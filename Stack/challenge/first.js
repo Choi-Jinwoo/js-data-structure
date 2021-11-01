@@ -1,7 +1,7 @@
 /**
  * Stack 자료구조 2개로 Queue 자료구조 구현
  */
-class SimpleStack {
+class Stack {
   constructor() {
     this.data = [];
   }
@@ -21,8 +21,8 @@ class SimpleStack {
 
 class Queue {
   constructor() {
-    this.inBox = new SimpleStack();
-    this.outBox = new SimpleStack();
+    this.inBox = new Stack();
+    this.outBox = new Stack();
   }
 
   enqueue(data) {
