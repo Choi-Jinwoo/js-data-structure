@@ -1,88 +1,108 @@
 /**
  * LinkedList
- * - 연결된 노드들로 리스트를 형성
- * - 삽입, 삭제 시 링크만 조정하여 적용
- * - index를 통해 접근 시 순서대로 접근해야해 비효율
+ * 조회: O(n)
+ * 단순 삽입/삭제: O(1)
+ * 조회 후 삽입/삭제: O(n)
  */
-
 class Node {
-  constructor(data, next) {
+  constructor(data, next = null) {
     this.data = data;
     this.next = next;
   }
 }
 
 class LinkedList {
-  #head = null;
-
-  constructor(data = []) {
-    for (let i = 0; i < data.length; i += 1) {
-      const node = new Node(data[i], null);
-      if (i === 0) {
-        this.#head = node;
-      } else {
-        const tail = this.#findTail();
-        tail.next = node;
-      }
-    }
+  constructor() {
+    this.head = null;
   }
 
-  #findTail() {
-    let p = this.#head;
-    while (p.next !== null) {
-      p = p.next;
-    }
-
-    return p;
-  }
-
-  remove(index) {
+  /**
+   * @description O(n)의 시간 복잡도
+   * @param {number} index
+   */
+  get(index) {
     if (index === 0) {
-      this.#head = this.#head.next;
+      return this.head.data;
+    }
+
+    let count = 0;
+    let node = this.head;
+
+    while (count < index) {
+      count += 1;
+      node = node.next;
+    }
+
+    return node.data;
+  }
+
+  /**
+   * @description O(n)의 시간 복잡도
+   * @param {number} index - 삽입할 인덱스 위치
+   * @param {number} value - 삽입할 데이터
+   */
+  insert(index, value) {
+    const node = new Node(value);
+    if (index === 0) {
+      node.next = this.head;
+      this.head = node;
       return;
     }
 
-    let p = this.#head;
+    let count = 0;
+    let previousNode = this.head;
 
-    for (let i = 0; i < index - 1; i += 1) {
-      p = p.next;
+    while (count < index - 1) {
+      count += 1;
+      previousNode = previousNode.next;
     }
 
-    p.next = p.next?.next ?? null;
+    node.next = previousNode.next;
+    previousNode.next = node;
   }
 
-  insert(index, data) {
-    const node = new Node(data, null);
+  /**
+   * @description O(n)의 시간 복잡도
+   * @param {number} index - 삭제할 인덱스 위치
+   */
+  remove(index) {
+    let count = 0;
+    let previousNode = this.head;
 
     if (index === 0) {
-      node.next = this.#head;
-      this.#head = node;
-    } else {
-      let p = this.#head;
-
-      for (let i = 0; i < index - 1; i += 1) {
-        p = p.next;
-      }
-
-      node.next = p.next?.next ?? null;
-      p.next = node;
+      this.head = this.head.next;
+      return;
     }
+
+    while (count < index - 1) {
+      count += 1;
+      previousNode = previousNode.next;
+    }
+
+    previousNode.next = previousNode.next.next;
   }
 
-  findAll() {
+  /**
+   * @description O(n)의 시간 복잡도
+   */
+  printAll() {
     const result = [];
-    let p = this.#head;
-    while (p !== null) {
-      result.push(p.data);
-      p = p.next;
+    let current = this.head;
+
+    while (current !== null) {
+      result.push(current.data);
+      current = current.next;
     }
 
-    return result;
+    console.log(result);
   }
 }
 
-const linkedList = new LinkedList([1, 2, 3, 4]);
-linkedList.insert(0, 0);
-console.log(linkedList.findAll()); // [0, 1, 2, 3, 4]
-linkedList.remove(0);
-console.log(linkedList.findAll()); // [1, 2, 3, 4]
+const linkedList = new LinkedList();
+linkedList.insert(0, 1); // [1]
+linkedList.insert(1, 2); // [1, 2]
+linkedList.insert(2, 3); // [1, 2, 3]
+linkedList.insert(1, 4); // [1, 4, 2, 3]
+linkedList.remove(0); // [4, 2, 3]
+
+linkedList.printAll();
