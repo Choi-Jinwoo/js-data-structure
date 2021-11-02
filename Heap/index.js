@@ -101,11 +101,19 @@ heap.insert(2);
 heap.insert(3);
 heap.insert(4);
 heap.insert(5);
+/**
+ *     5
+ *    / \
+ *   4   2
+ *  / \
+ * 1   3
+ */
 heap.delete();
 heap.delete();
 /**
- *     5
- *   4  2
- * 1  3
+ *   3
+ *  / \
+ * 1   2
  */
+
 console.log(JSON.stringify(heap.heap));
