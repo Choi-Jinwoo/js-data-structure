@@ -1,4 +1,4 @@
-# DataStructure with Javascript
+# Data structure with Javascript
 
 ### 소개
 
