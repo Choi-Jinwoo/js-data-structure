@@ -27,4 +27,11 @@ function heapify(array) {
   return heap;
 }
 
-console.log(heapify([1, 2, 3, 4, 5]));
+console.log(heapify([1, 2, 3, 4, 5])); // [null, 5, 4, 2, 1, 3]
+/**
+ *     5
+ *    / \
+ *   4   2
+ *  / \
+ * 1   2
+ */
